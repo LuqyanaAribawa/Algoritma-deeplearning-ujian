@@ -1,0 +1,1964 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 EXTREME MEMORY - Deep Learning Mastery</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto+Mono:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --neon-red: #ff0040;
+            --neon-green: #00ff88;
+            --neon-blue: #00d4ff;
+            --neon-purple: #bf00ff;
+            --neon-yellow: #ffee00;
+            --dark-bg: #0a0a0f;
+            --card-bg: #12121a;
+        }
+        
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background: var(--dark-bg);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(255, 0, 64, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(191, 0, 255, 0.1) 0%, transparent 60%);
+        }
+        
+        /* Neural Network Animation */
+        .neural-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .neuron {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--neon-blue);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(180deg, rgba(255, 0, 64, 0.2) 0%, transparent 100%);
+            border-bottom: 2px solid var(--neon-red);
+            position: relative;
+        }
+        
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            background: linear-gradient(90deg, var(--neon-red), var(--neon-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 0, 64, 0.5);
+            animation: glitch 3s infinite;
+        }
+        
+        @keyframes glitch {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-2px, 2px); }
+            94% { transform: translate(2px, -2px); }
+            96% { transform: translate(-2px, -2px); }
+            98% { transform: translate(2px, 2px); }
+        }
+        
+        .header .subtitle {
+            color: var(--neon-yellow);
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 20px;
+            background: rgba(18, 18, 26, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-icon {
+            font-size: 1.5rem;
+        }
+        
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--neon-green);
+        }
+        
+        .stat-label {
+            font-size: 0.7rem;
+            color: #888;
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            width: 200px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-red), var(--neon-green));
+            width: 0%;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px var(--neon-green);
+        }
+        
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-tab {
+            padding: 15px 30px;
+            background: var(--card-bg);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .nav-tab:hover {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .nav-tab.active {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+            border-color: transparent;
+            box-shadow: 0 0 30px rgba(191, 0, 255, 0.5);
+        }
+        
+        /* Main Content */
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Quiz Mode */
+        .quiz-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-red), var(--neon-purple), var(--neon-blue));
+        }
+        
+        .question-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            color: var(--neon-purple);
+            opacity: 0.3;
+            position: absolute;
+            top: 20px;
+            right: 30px;
+        }
+        
+        .question-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            padding-right: 80px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .option {
+            padding: 18px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .option:hover:not(.disabled) {
+            border-color: var(--neon-blue);
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateX(10px);
+        }
+        
+        .option.selected {
+            border-color: var(--neon-yellow);
+            background: rgba(255, 238, 0, 0.15);
+        }
+        
+        .option.correct {
+            border-color: var(--neon-green);
+            background: rgba(0, 255, 136, 0.2);
+            animation: correctPulse 0.5s ease;
+        }
+        
+        @keyframes correctPulse {
+            0%, 100% { box-shadow: 0 0 0 rgba(0, 255, 136, 0); }
+            50% { box-shadow: 0 0 30px rgba(0, 255, 136, 0.5); }
+        }
+        
+        .option.wrong {
+            border-color: var(--neon-red);
+            background: rgba(255, 0, 64, 0.2);
+            animation: shake 0.5s ease;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        .option-letter {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+        }
+        
+        .option.correct .option-letter {
+            background: var(--neon-green);
+            color: #000;
+        }
+        
+        .option.wrong .option-letter {
+            background: var(--neon-red);
+            color: #000;
+        }
+        
+        /* Memory Trick Box */
+        .memory-trick {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 0, 64, 0.15), rgba(191, 0, 255, 0.15));
+            border-radius: 15px;
+            border-left: 4px solid var(--neon-red);
+            display: none;
+        }
+        
+        .memory-trick.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .memory-trick-title {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-red);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .memory-trick-content {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #ddd;
+        }
+        
+        .keyword {
+            color: var(--neon-yellow);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 238, 0, 0.5);
+        }
+        
+        .pain-point {
+            color: var(--neon-red);
+            font-weight: bold;
+        }
+        
+        .reward {
+            color: var(--neon-green);
+            font-weight: bold;
+        }
+        
+        /* Quiz Controls */
+        .quiz-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 15px 35px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+            color: #fff;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+            transform: scale(1.05);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, var(--neon-red), #ff6600);
+            color: #fff;
+        }
+        
+        .btn-danger:hover {
+            box-shadow: 0 0 30px rgba(255, 0, 64, 0.5);
+            transform: scale(1.05);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #00aa55, var(--neon-green));
+            color: #000;
+        }
+        
+        .btn-success:hover {
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+            transform: scale(1.05);
+        }
+        
+        /* Essay Section */
+        .essay-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .essay-header {
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(191, 0, 255, 0.2), rgba(0, 212, 255, 0.2));
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .essay-header:hover {
+            background: linear-gradient(135deg, rgba(191, 0, 255, 0.3), rgba(0, 212, 255, 0.3));
+        }
+        
+        .essay-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--neon-blue);
+        }
+        
+        .essay-toggle {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .essay-card.open .essay-toggle {
+            transform: rotate(180deg);
+        }
+        
+        .essay-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        .essay-card.open .essay-content {
+            padding: 25px;
+            max-height: 5000px;
+        }
+        
+        /* Code Block */
+        .code-block {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        
+        .code-block::before {
+            content: 'PYTHON';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 0.7rem;
+            color: var(--neon-green);
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .code-block pre {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #e0e0e0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .code-comment {
+            color: #6a9955;
+        }
+        
+        .code-keyword {
+            color: #569cd6;
+        }
+        
+        .code-function {
+            color: #dcdcaa;
+        }
+        
+        .code-string {
+            color: #ce9178;
+        }
+        
+        .code-number {
+            color: #b5cea8;
+        }
+        
+        /* Output Block */
+        .output-block {
+            background: #0d0d15;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid var(--neon-green);
+            position: relative;
+        }
+        
+        .output-block::before {
+            content: '📤 OUTPUT';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--card-bg);
+            padding: 0 10px;
+            font-size: 0.75rem;
+            color: var(--neon-green);
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .output-block pre {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--neon-green);
+        }
+        
+        /* Explanation Box */
+        .explanation-box {
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid var(--neon-blue);
+        }
+        
+        .explanation-box h4 {
+            color: var(--neon-blue);
+            margin-bottom: 15px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .explanation-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .explanation-box li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            gap: 10px;
+        }
+        
+        .explanation-box li::before {
+            content: '▹';
+            color: var(--neon-purple);
+        }
+        
+        .func-name {
+            color: var(--neon-yellow);
+            font-weight: bold;
+        }
+        
+        /* Flashcard Mode */
+        .flashcard-container {
+            perspective: 1000px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        
+        .flashcard {
+            position: relative;
+            width: 100%;
+            min-height: 300px;
+            transform-style: preserve-3d;
+            transition: transform 0.8s ease;
+            cursor: pointer;
+        }
+        
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .flashcard-face {
+            position: absolute;
+            width: 100%;
+            min-height: 300px;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .flashcard-front {
+            background: linear-gradient(135deg, var(--card-bg), #1a1a2e);
+            border: 2px solid var(--neon-purple);
+        }
+        
+        .flashcard-back {
+            background: linear-gradient(135deg, #1a2e1a, #0d150d);
+            border: 2px solid var(--neon-green);
+            transform: rotateY(180deg);
+        }
+        
+        .flashcard-question {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .flashcard-answer {
+            font-size: 1.3rem;
+            color: var(--neon-green);
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .flashcard-hint {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+        
+        /* Score Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-overlay.show {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal {
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            border: 2px solid var(--neon-purple);
+            box-shadow: 0 0 50px rgba(191, 0, 255, 0.3);
+        }
+        
+        .modal-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        .modal-score {
+            font-size: 4rem;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(90deg, var(--neon-green), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .modal-message {
+            margin: 20px 0;
+            font-size: 1.1rem;
+            color: #aaa;
+        }
+        
+        /* Fear Counter */
+        .fear-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 0, 64, 0.9);
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-family: 'Orbitron', sans-serif;
+            display: none;
+            animation: fearPulse 1s infinite;
+            z-index: 100;
+        }
+        
+        .fear-counter.show {
+            display: block;
+        }
+        
+        @keyframes fearPulse {
+            0%, 100% { box-shadow: 0 0 10px var(--neon-red); }
+            50% { box-shadow: 0 0 30px var(--neon-red); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stat-item {
+                padding: 8px 12px;
+            }
+            
+            .stat-value {
+                font-size: 1rem;
+            }
+            
+            .question-number {
+                font-size: 2rem;
+                top: 10px;
+                right: 15px;
+            }
+            
+            .question-text {
+                padding-right: 50px;
+                font-size: 1rem;
+            }
+            
+            .nav-tab {
+                padding: 10px 20px;
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Quick Summary Cards */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .summary-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .summary-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-blue);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+        
+        .summary-card h4 {
+            color: var(--neon-purple);
+            margin-bottom: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+        }
+        
+        .summary-card p {
+            color: var(--neon-green);
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        
+        /* Streak Animation */
+        .streak-fire {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 8rem;
+            z-index: 200;
+            animation: fireUp 1s ease forwards;
+            pointer-events: none;
+            display: none;
+        }
+        
+        .streak-fire.show {
+            display: block;
+        }
+        
+        @keyframes fireUp {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+            100% { opacity: 0; transform: translate(-50%, -100%) scale(1); }
+        }
+        
+        /* All Questions List */
+        .question-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+            gap: 8px;
+            margin: 20px 0;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 15px;
+        }
+        
+        .question-dot {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+        }
+        
+        .question-dot:hover {
+            background: var(--neon-blue);
+            color: #000;
+        }
+        
+        .question-dot.current {
+            background: var(--neon-purple);
+            color: #fff;
+            box-shadow: 0 0 15px var(--neon-purple);
+        }
+        
+        .question-dot.correct {
+            background: var(--neon-green);
+            color: #000;
+        }
+        
+        .question-dot.wrong {
+            background: var(--neon-red);
+            color: #fff;
+        }
+        
+        /* Timer */
+        .timer {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--neon-yellow);
+        }
+        
+        .timer.danger {
+            color: var(--neon-red);
+            animation: timerPulse 0.5s infinite;
+        }
+        
+        @keyframes timerPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="neural-bg" id="neuralBg"></div>
+    
+    <header class="header">
+        <h1>🧠 EXTREME MEMORY TRAINER</h1>
+        <p class="subtitle">Deep Learning - Teknik Ingatan Permanen dengan Psikologi Ekstrem</p>
+    </header>
+    
+    <div class="stats-bar">
+        <div class="stat-item">
+            <span class="stat-icon">🎯</span>
+            <div>
+                <div class="stat-value" id="scoreValue">0</div>
+                <div class="stat-label">SKOR</div>
+            </div>
+        </div>
+        <div class="stat-item">
+            <span class="stat-icon">🔥</span>
+            <div>
+                <div class="stat-value" id="streakValue">0</div>
+                <div class="stat-label">STREAK</div>
+            </div>
+        </div>
+        <div class="stat-item">
+            <span class="stat-icon">📊</span>
+            <div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div class="stat-label">PROGRESS</div>
+            </div>
+        </div>
+        <div class="stat-item">
+            <span class="stat-icon">⏱️</span>
+            <div>
+                <div class="stat-value timer" id="timerValue">00:00</div>
+                <div class="stat-label">WAKTU</div>
+            </div>
+        </div>
+    </div>
+    
+    <nav class="nav-tabs">
+        <button class="nav-tab active" onclick="switchSection('quiz')">🎮 MODE QUIZ</button>
+        <button class="nav-tab" onclick="switchSection('flashcard')">🃏 FLASHCARD</button>
+        <button class="nav-tab" onclick="switchSection('essay')">📝 ESSAY</button>
+        <button class="nav-tab" onclick="switchSection('summary')">📋 RINGKASAN</button>
+    </nav>
+    
+    <main class="content">
+        <!-- Quiz Section -->
+        <section class="section active" id="quizSection">
+            <div class="question-list" id="questionList"></div>
+            <div class="quiz-container" id="quizContainer"></div>
+            <div class="quiz-controls">
+                <button class="btn btn-danger" onclick="prevQuestion()">⬅️ SEBELUMNYA</button>
+                <button class="btn btn-primary" onclick="checkAnswer()">✅ CEK JAWABAN</button>
+                <button class="btn btn-success" onclick="nextQuestion()">BERIKUTNYA ➡️</button>
+            </div>
+            <div class="quiz-controls" style="margin-top: 15px;">
+                <button class="btn btn-primary" onclick="resetQuiz()">🔄 MULAI ULANG</button>
+            </div>
+        </section>
+        
+        <!-- Flashcard Section -->
+        <section class="section" id="flashcardSection">
+            <div class="flashcard-container">
+                <div class="flashcard" id="flashcard" onclick="flipCard()">
+                    <div class="flashcard-face flashcard-front">
+                        <div class="flashcard-question" id="flashcardQuestion"></div>
+                        <div class="flashcard-hint">👆 Klik untuk melihat jawaban</div>
+                    </div>
+                    <div class="flashcard-face flashcard-back">
+                        <div class="flashcard-answer" id="flashcardAnswer"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="quiz-controls">
+                <button class="btn btn-danger" onclick="prevFlashcard()">⬅️</button>
+                <button class="btn btn-primary" onclick="shuffleFlashcards()">🔀 ACAK</button>
+                <button class="btn btn-success" onclick="nextFlashcard()">➡️</button>
+            </div>
+            <p style="text-align: center; margin-top: 15px; color: #888;">
+                Kartu <span id="flashcardCurrent">1</span> dari <span id="flashcardTotal">25</span>
+            </p>
+        </section>
+        
+        <!-- Essay Section -->
+        <section class="section" id="essaySection">
+            <div id="essayContainer"></div>
+        </section>
+        
+        <!-- Summary Section -->
+        <section class="section" id="summarySection">
+            <h2 style="color: var(--neon-purple); text-align: center; margin-bottom: 30px; font-family: 'Orbitron', sans-serif;">
+                📌 RINGKASAN CEPAT - WAJIB INGAT!
+            </h2>
+            <div class="summary-grid" id="summaryGrid"></div>
+        </section>
+    </main>
+    
+    <!-- Score Modal -->
+    <div class="modal-overlay" id="scoreModal">
+        <div class="modal">
+            <div class="modal-icon" id="modalIcon">🏆</div>
+            <h2 class="modal-title" id="modalTitle">HASIL QUIZ</h2>
+            <div class="modal-score" id="modalScore">0/25</div>
+            <p class="modal-message" id="modalMessage"></p>
+            <button class="btn btn-primary" onclick="closeModal()">LANJUTKAN</button>
+        </div>
+    </div>
+    
+    <!-- Streak Fire Animation -->
+    <div class="streak-fire" id="streakFire">🔥</div>
+    
+    <!-- Fear Counter -->
+    <div class="fear-counter" id="fearCounter">
+        ⚠️ SALAH: <span id="wrongCount">0</span>
+    </div>
+
+    <script>
+        // =====================================================
+        // DATA SOAL PILIHAN GANDA
+        // =====================================================
+        const questions = [
+            {
+                id: 1,
+                question: "Perbedaan utama antara Machine Learning dan Deep Learning adalah bahwa Deep Learning mampu mempelajari fitur (feature) secara otomatis dari data mentah, sedangkan Machine Learning tradisional membutuhkan ekstraksi fitur manual.",
+                options: [
+                    "Kebutuhan hardware yang lebih sederhana pada ML.",
+                    "DL hanya dapat memproses data terstruktur.",
+                    "Kemampuan DL untuk belajar feature secara otomatis dari data mentah.",
+                    "ML hanya dapat memproses data tak terstruktur."
+                ],
+                correct: 2,
+                memoryTrick: "🧠 <span class='keyword'>DEEP = DALAM = OTOMATIS</span>. Bayangkan otak yang <span class='pain-point'>terlalu malas</span> untuk manual - dia belajar sendiri dari data mentah! ML seperti <span class='pain-point'>kerja paksa manual</span>, DL seperti <span class='reward'>otak jenius yang auto-pilot</span>."
+            },
+            {
+                id: 2,
+                question: "Jenis Machine Learning di mana model dilatih tanpa label output dan bertugas menemukan pola atau struktur tersembunyi dalam data (seperti algoritma clustering) disebut...",
+                options: [
+                    "Supervised Learning",
+                    "Reinforcement Learning",
+                    "Online Process",
+                    "Unsupervised Learning"
+                ],
+                correct: 3,
+                memoryTrick: "🕵️ <span class='keyword'>UN-SUPERVISED = TANPA PENGAWASAN</span>. Seperti anak yang <span class='pain-point'>dibuang tanpa petunjuk</span>, harus cari jalan sendiri. <span class='keyword'>TANPA LABEL = UNSUPERVISED</span>. Ingat: <span class='reward'>Clustering = Mengelompokkan SENDIRI tanpa diajari</span>!"
+            },
+            {
+                id: 3,
+                question: "Tahapan pengolahan data pada Deep Learning setelah Data Preparation adalah...",
+                options: [
+                    "Evaluasi Model",
+                    "Data Cleansing",
+                    "Produk",
+                    "Train Model"
+                ],
+                correct: 3,
+                memoryTrick: "🚂 <span class='keyword'>PREP → TRAIN</span>. Setelah <span class='keyword'>PERSIAPAN</span>, saatnya <span class='reward'>LATIHAN (TRAIN)</span>! Seperti atlet: persiapan dulu, baru latihan. <span class='pain-point'>Jangan evaluasi sebelum latihan!</span>"
+            },
+            {
+                id: 4,
+                question: "Dalam Aljabar Linear, operasi yang mengubah matriks A (mxn) menjadi matriks A^T (nxm) dengan menukar posisi baris dan kolom disebut...",
+                options: [
+                    "Inverse Matrix",
+                    "Matrix Addition",
+                    "Transpose Matrix",
+                    "Dot Product"
+                ],
+                correct: 2,
+                memoryTrick: "🔄 <span class='keyword'>TRANSPOSE = TRANS(fer) POSISI</span>. Baris jadi kolom, kolom jadi baris. Seperti <span class='pain-point'>membalik meja 90°</span>! <span class='keyword'>4x3 → 3x4</span>. T = Tukar!"
+            },
+            {
+                id: 5,
+                question: "Library Python yang paling fundamental untuk memanipulasi array multidimensi (seperti matriks) dan mendukung operasi Aljabar Linear yang efisien adalah...",
+                options: [
+                    "Matplotlib",
+                    "Pandas",
+                    "Scikit-learn",
+                    "Numpy"
+                ],
+                correct: 3,
+                memoryTrick: "🔢 <span class='keyword'>NUMPY = NUMerical PYthon</span>. NUM = Angka = Array = Matriks! <span class='reward'>Numpy adalah FONDASI matematika</span>. Pandas untuk tabel, Matplotlib untuk gambar, tapi <span class='keyword'>NUMPY untuk ANGKA & MATRIKS</span>!"
+            },
+            {
+                id: 6,
+                question: "Konsep Kalkulus Dasar yang paling relevan dalam algoritma Gradient Descent untuk menemukan arah perubahan weight yang meminimalkan error adalah...",
+                options: [
+                    "Integration",
+                    "Limit",
+                    "Differentiation (Gradient)",
+                    "Series"
+                ],
+                correct: 2,
+                memoryTrick: "📉 <span class='keyword'>GRADIENT = TURUNAN = DIFFERENTIATION</span>. Gradient Descent mencari <span class='reward'>jalan menurun tercuram</span> untuk minimalisasi error. <span class='keyword'>DIFERENSIASI menunjukkan ARAH KEMIRINGAN</span>!"
+            },
+            {
+                id: 7,
+                question: "Terminologi pada Neural Network yang berfungsi untuk mengukur seberapa besar perbedaan antara output yang diprediksi oleh model dan nilai aktualnya, yang akan diminimalkan selama pelatihan, adalah...",
+                options: [
+                    "Activation Function",
+                    "Cost/Cost Function",
+                    "Perceptron",
+                    "Learning Rate"
+                ],
+                correct: 1,
+                memoryTrick: "💸 <span class='keyword'>COST = BIAYA KESALAHAN</span>. Semakin besar cost, semakin <span class='pain-point'>MAHAL errornya</span>! Cost Function = <span class='reward'>Penghitung seberapa SALAH prediksi kita</span>. Kita mau <span class='keyword'>MINIMIZE COST = KURANGI KESALAHAN</span>!"
+            },
+            {
+                id: 8,
+                question: "Proses di mana error dari output layer disebarkan kembali ke hidden layer untuk menyesuaikan weight dan bias disebut algoritma...",
+                options: [
+                    "Forward Propagation",
+                    "Gradient Descent",
+                    "Perceptron",
+                    "Backpropagation"
+                ],
+                correct: 3,
+                memoryTrick: "⬅️ <span class='keyword'>BACK-PROPAGATION = PROPAGASI MUNDUR</span>. Error di ujung <span class='pain-point'>disalahkan balik</span> ke belakang untuk perbaikan! <span class='keyword'>Forward = maju, BACK = MUNDUR</span>. Error <span class='reward'>disebarkan KEMBALI untuk belajar</span>!"
+            },
+            {
+                id: 9,
+                question: "Pemanfaatan Tensorflow sebagai library untuk Neural Network didasarkan pada arsitektur yang merepresentasikan perhitungan sebagai...",
+                options: [
+                    "Relational Table",
+                    "Data Flow Graph",
+                    "Sequential List",
+                    "Decision Tree"
+                ],
+                correct: 1,
+                memoryTrick: "📊 <span class='keyword'>TENSOR-FLOW = TENSOR yang MENGALIR</span>. Data mengalir seperti <span class='reward'>air dalam pipa (GRAPH)</span>! <span class='keyword'>DATA FLOW GRAPH</span> = Grafik aliran data. Tensor = data, Flow = mengalir!"
+            },
+            {
+                id: 10,
+                question: "Objek utama dalam Tensorflow yang merepresentasikan unit data yang mengalir melalui grafik komputasi adalah...",
+                options: [
+                    "Session",
+                    "Operation",
+                    "Variable",
+                    "Tensor"
+                ],
+                correct: 3,
+                memoryTrick: "📦 <span class='keyword'>TENSOR-flow</span>. Tensor adalah <span class='reward'>PAKET DATA yang mengalir</span>! Tensor = Array multidimensi = Unit data utama. <span class='keyword'>Tensor adalah BINTANG UTAMA di Tensorflow</span>!"
+            },
+            {
+                id: 11,
+                question: "Library Python tingkat tinggi yang sering digunakan sebagai wrapper di atas Tensorflow untuk mempermudah pembangunan model Deep Learning dengan sintaks yang lebih sederhana adalah...",
+                options: [
+                    "Numpy",
+                    "Pandas",
+                    "Keras",
+                    "Scikit-learn"
+                ],
+                correct: 2,
+                memoryTrick: "🎁 <span class='keyword'>KERAS = MUDAH (bahasa Yunani)</span>. Keras membungkus Tensorflow agar <span class='reward'>lebih mudah dipakai</span>! <span class='keyword'>KERAS = WRAPPER = PEMBUNGKUS yang mempermudah</span>. High-level = Mudah dipahami manusia!"
+            },
+            {
+                id: 12,
+                question: "Model Deep Learning yang secara khusus dirancang untuk memproses data sekuensial (deret waktu atau teks) dan memiliki mekanisme memori adalah...",
+                options: [
+                    "CNN",
+                    "RBM",
+                    "Autoencoder",
+                    "RNN"
+                ],
+                correct: 3,
+                memoryTrick: "🔁 <span class='keyword'>RNN = RECURRENT = BERULANG</span>. Seperti <span class='reward'>otak yang MENGINGAT masa lalu</span>! R = Recurrent = Kembali = Ada memori. <span class='keyword'>SEKUENSIAL + MEMORI = RNN</span>. Untuk teks & waktu!"
+            },
+            {
+                id: 13,
+                question: "Arsitektur yang diciptakan untuk mengatasi masalah vanishing/exploding gradient pada RNN tradisional dengan memperkenalkan mekanisme gates (Input, Forget, Output) adalah...",
+                options: [
+                    "DBN",
+                    "CNN",
+                    "LSTM",
+                    "AE"
+                ],
+                correct: 2,
+                memoryTrick: "🚪 <span class='keyword'>LSTM = Long SHORT-TERM Memory</span>. Punya 3 GERBANG: <span class='keyword'>Input, Forget, Output</span>. <span class='reward'>FORGET GATE = bisa melupakan yang tidak penting</span>! LSTM mengatasi vanishing gradient dengan GATES!"
+            },
+            {
+                id: 14,
+                question: "Lapisan dalam Convolutional Neural Network (CNN) yang bertugas mengekstraksi fitur lokal dengan menerapkan filter atau kernel adalah...",
+                options: [
+                    "Max Pooling Layer",
+                    "Fully Connected Layer",
+                    "Flatten Layer",
+                    "Convolution Layer"
+                ],
+                correct: 3,
+                memoryTrick: "🔍 <span class='keyword'>CONVOLUTION LAYER = KONVOLUSI = FILTER</span>. Seperti <span class='reward'>kaca pembesar yang mencari pola</span>! Conv Layer menggunakan KERNEL/FILTER untuk <span class='keyword'>ekstraksi FITUR</span>. CONVOLUTION = DETEKSI FITUR!"
+            },
+            {
+                id: 15,
+                question: "Tujuan utama dari Max Pooling Layer dalam CNN adalah...",
+                options: [
+                    "Menambah jumlah neuron.",
+                    "Meningkatkan resolusi citra.",
+                    "Mengurangi dimensi spasial (resolusi) data fitur dan parameter.",
+                    "Menghubungkan semua neuron secara penuh."
+                ],
+                correct: 2,
+                memoryTrick: "📉 <span class='keyword'>POOLING = MENGUMPULKAN & MENGECILKAN</span>. Max Pooling mengambil nilai <span class='reward'>MAKSIMUM dan MENGURANGI UKURAN</span>! <span class='pain-point'>Bukan menambah, tapi MENGURANGI dimensi</span>. Pool = kolam kecil yang merangkum!"
+            },
+            {
+                id: 16,
+                question: "Proses weight sharing dalam CNN, di mana filter yang sama diulang di seluruh area input, sangat efektif untuk pemrosesan citra karena memanfaatkan...",
+                options: [
+                    "Data Sekuensial",
+                    "Lokalitas Spasial",
+                    "Gradient Descent",
+                    "Unsupervised Learning"
+                ],
+                correct: 1,
+                memoryTrick: "📍 <span class='keyword'>LOKALITAS SPASIAL = KEDEKATAN LOKASI</span>. Piksel yang <span class='reward'>berdekatan saling berhubungan</span>! Weight sharing memanfaatkan fakta bahwa <span class='keyword'>fitur di satu tempat mirip di tempat lain</span>. SPASIAL = RUANG/LOKASI!"
+            },
+            {
+                id: 17,
+                question: "Model Deep Learning yang umum digunakan untuk tujuan dimensionality reduction dan denoising dengan cara meng-encode input ke representasi berdimensi rendah (bottleneck) lalu men-decode-nya kembali adalah...",
+                options: [
+                    "RNN",
+                    "RBM",
+                    "Autoencoder (AE)",
+                    "DBN"
+                ],
+                correct: 2,
+                memoryTrick: "🗜️ <span class='keyword'>AUTO-ENCODER = ENCODE SENDIRI</span>. Kompres (encode) lalu dekompresi (decode)! <span class='reward'>BOTTLENECK = leher botol = titik tersempit</span>. Digunakan untuk <span class='keyword'>REDUKSI DIMENSI & DENOISING</span>!"
+            },
+            {
+                id: 18,
+                question: "Algoritma Restricted Boltzmann Machine (RBM) utamanya terdiri dari dua lapisan, yaitu...",
+                options: [
+                    "Input dan Output",
+                    "Convolutional dan Pooling",
+                    "Visibel dan Tersembunyi (Hidden)",
+                    "Input dan Fully Connected"
+                ],
+                correct: 2,
+                memoryTrick: "👁️ <span class='keyword'>RBM = VISIBLE + HIDDEN</span>. <span class='reward'>VISIBLE = yang terlihat, HIDDEN = tersembunyi</span>! Restricted = terbatas, hanya 2 layer. <span class='keyword'>Visible & Hidden = Duo RBM</span>!"
+            },
+            {
+                id: 19,
+                question: "Model Deep Learning yang sering digunakan untuk language modelling karena kemampuannya mempertahankan informasi dalam jangka waktu yang lama adalah...",
+                options: [
+                    "CNN",
+                    "RBM",
+                    "LSTM",
+                    "AE"
+                ],
+                correct: 2,
+                memoryTrick: "📝 <span class='keyword'>LSTM = LONG-term memory untuk LANGUAGE</span>. Bahasa butuh <span class='reward'>mengingat kata sebelumnya</span>! <span class='keyword'>L dalam LSTM = Long = Lama = Bahasa</span>. Language Modelling = LSTM!"
+            },
+            {
+                id: 20,
+                question: "Penggunaan library Pandas dalam konteks Deep Learning (seperti pada Minggu 2-3) umumnya difokuskan pada...",
+                options: [
+                    "Visualisasi grafik.",
+                    "Manajemen dan analisis data tabular (seperti data loading dan cleansing).",
+                    "Operasi Aljabar Linear tingkat rendah.",
+                    "Training model Neural Network."
+                ],
+                correct: 1,
+                memoryTrick: "🐼 <span class='keyword'>PANDAS = DATA TABULAR (TABEL)</span>. Pandas seperti Excel Python! <span class='reward'>Loading, cleansing, manipulasi TABEL</span>. <span class='keyword'>PANDAS = PANEL DATA = TABEL</span>. Bukan untuk training, tapi untuk <span class='reward'>PERSIAPAN DATA</span>!"
+            },
+            {
+                id: 21,
+                question: "Dalam konteks deep learning, salah satu platform terintegrasi yang disebutkan dalam RPS (Minggu 6-7) adalah...",
+                options: [
+                    "Jupyter",
+                    "Google Colab",
+                    "AWS (Amazon Web Services)",
+                    "Scipy"
+                ],
+                correct: 1,
+                memoryTrick: "☁️ <span class='keyword'>GOOGLE COLAB = CLOUD + GRATIS GPU</span>! Platform terintegrasi untuk DL. <span class='reward'>Colab = Collaboration = Bisa share</span>. <span class='keyword'>GOOGLE COLAB untuk Deep Learning</span> di cloud!"
+            },
+            {
+                id: 22,
+                question: "Learning rate dalam Gradient Descent menentukan...",
+                options: [
+                    "Jumlah neuron dalam jaringan.",
+                    "Besarnya langkah yang diambil saat memperbarui weight.",
+                    "Jumlah epoch pelatihan.",
+                    "Tipe activation function."
+                ],
+                correct: 1,
+                memoryTrick: "👣 <span class='keyword'>LEARNING RATE = UKURAN LANGKAH</span>. Seperti <span class='reward'>seberapa besar langkah kaki</span> saat menuruni bukit! <span class='pain-point'>Terlalu besar = melompat-lompat, terlalu kecil = lama</span>. <span class='keyword'>RATE = KECEPATAN/UKURAN LANGKAH</span>!"
+            },
+            {
+                id: 23,
+                question: "Activation Function yang paling umum digunakan dalam hidden layer CNN karena meminimalkan masalah vanishing gradient adalah...",
+                options: [
+                    "Sigmoid",
+                    "Tanh",
+                    "Softmax",
+                    "ReLU (Rectified Linear Unit)"
+                ],
+                correct: 3,
+                memoryTrick: "⚡ <span class='keyword'>ReLU = RAJA HIDDEN LAYER</span>. ReLU = max(0, x) = <span class='reward'>sederhana dan cepat</span>! <span class='pain-point'>Sigmoid/Tanh menyebabkan vanishing gradient</span>, ReLU TIDAK. <span class='keyword'>ReLU untuk HIDDEN, Softmax untuk OUTPUT</span>!"
+            },
+            {
+                id: 24,
+                question: "Jika Anda memiliki matriks A (4x5), berapakah dimensi matriks hasil Transpose A^T?",
+                options: [
+                    "4x5",
+                    "5x4",
+                    "4x4",
+                    "5x5"
+                ],
+                correct: 1,
+                memoryTrick: "🔄 <span class='keyword'>TRANSPOSE = TUKAR DIMENSI</span>. (m×n) → (n×m). <span class='reward'>4×5 → 5×4</span>! Baris jadi kolom, kolom jadi baris. <span class='keyword'>HANYA TUKAR ANGKANYA</span>!"
+            },
+            {
+                id: 25,
+                question: "Convolutional Neural Network (CNN) merupakan arsitektur yang secara utama diimplementasikan untuk kasus...",
+                options: [
+                    "Language Modelling",
+                    "Time Series Forecasting",
+                    "Image Processing",
+                    "Recommender System (non-sequential)"
+                ],
+                correct: 2,
+                memoryTrick: "🖼️ <span class='keyword'>CNN = COMPUTER VISION = GAMBAR</span>! <span class='reward'>Convolution = Filter untuk mendeteksi pola visual</span>. <span class='keyword'>CNN untuk IMAGE, RNN untuk SEQUENCE</span>. CNN = Citra Neural Network!"
+            }
+        ];
+
+        // =====================================================
+        // DATA ESSAY
+        // =====================================================
+        const essays = [
+            {
+                id: 1,
+                title: "ESSAY 1: Operasi Matriks NumPy",
+                code: `import numpy as np
+
+A = np.random.randint(1, 11, size=(4, 3))
+print("Matriks A (4x3):\\n", A)
+
+A_transpose = A.T
+print("\\nTranspose Matriks A (A.T):\\n", A_transpose)
+
+mean_per_column = np.mean(A, axis=0)
+print("\\nRata-rata per Kolom (axis=0):\\n", mean_per_column)`,
+                explanation: [
+                    { func: "np.random.randint(1, 11, size=(4, 3))", desc: "Membuat matriks 4×3 dengan angka acak 1-10" },
+                    { func: "A.T", desc: "Melakukan transpose matriks (menukar baris dan kolom), dari 4×3 menjadi 3×4" },
+                    { func: "np.mean(A, axis=0)", desc: "Menghitung rata-rata per kolom (arah vertikal)" }
+                ],
+                output: `Matriks A (4x3):
+ [[9 2 5]
+ [9 8 2]
+ [3 8 8]
+ [9 7 4]]
+
+Transpose Matriks A (A.T):
+ [[9 9 3 9]
+ [2 8 8 7]
+ [5 2 8 4]]
+
+Rata-rata (mean) per Kolom (axis=0):
+ [7.5  6.25 4.75]`,
+                memoryTrick: "📐 NUMPY adalah FONDASI MATEMATIKA Python. Ingat: <span class='keyword'>axis=0 = VERTIKAL (kolom)</span>, axis=1 = horizontal (baris). <span class='keyword'>T = Transpose = Tukar</span>!"
+            },
+            {
+                id: 2,
+                title: "ESSAY 2: Perceptron untuk Fungsi Logika OR",
+                code: `import numpy as np
+
+def perceptron_or(x1, x2):
+    W = np.array([0.5, 0.5])  # Weight untuk x1 dan x2
+    bias = -0.2  # Bias
+    X = np.array([x1, x2])
+    
+    # Hitung sum: W1*x1 + W2*x2 + bias
+    sum_input = np.dot(W, X) + bias
+    
+    # Step Function: Jika sum > 0, output = 1; Jika sum <= 0, output = 0
+    output = 1 if sum_input > 0 else 0
+    return output
+
+# Pengujian
+print("--- Pengujian Perceptron (OR) ---")
+print("Input [0, 0], Output:", perceptron_or(0, 0))  # Output: 0
+print("Input [0, 1], Output:", perceptron_or(0, 1))  # Output: 1
+print("Input [1, 0], Output:", perceptron_or(1, 0))  # Output: 1
+print("Input [1, 1], Output:", perceptron_or(1, 1))  # Output: 1`,
+                explanation: [
+                    { func: "Weight W = [0.5, 0.5]", desc: "Bobot untuk setiap input" },
+                    { func: "Bias = -0.2", desc: "Nilai threshold untuk aktivasi" },
+                    { func: "np.dot(W, X)", desc: "Menghitung dot product (W1×x1 + W2×x2)" },
+                    { func: "Step Function", desc: "Jika sum > 0, output = 1; jika sum ≤ 0, output = 0" }
+                ],
+                output: `--- Pengujian Perceptron (OR) ---
+Input [0, 0], Output: 0
+Input [0, 1], Output: 1
+Input [1, 0], Output: 1
+Input [1, 1], Output: 1`,
+                calculation: `• Input [0,0]: 0.5×0 + 0.5×0 - 0.2 = -0.2 ≤ 0 → Output: 0
+• Input [0,1]: 0.5×0 + 0.5×1 - 0.2 = 0.3 > 0 → Output: 1
+• Input [1,0]: 0.5×1 + 0.5×0 - 0.2 = 0.3 > 0 → Output: 1
+• Input [1,1]: 0.5×1 + 0.5×1 - 0.2 = 0.8 > 0 → Output: 1`,
+                memoryTrick: "🧮 OR = Minimal SATU input harus 1. <span class='keyword'>Rumus: W1×x1 + W2×x2 + bias</span>. Step Function = <span class='keyword'>Jika > 0 maka 1, selainnya 0</span>!"
+            },
+            {
+                id: 3,
+                title: "ESSAY 3: Pre-processing Data Sekuensial (Windowing)",
+                code: `import numpy as np
+
+# Data deret waktu (suhu harian)
+data = np.array([25, 26, 25, 27, 28, 26, 25, 24, 25, 27])
+window_size = 3
+
+X = []  # List untuk Input (sekuens 3 hari)
+Y = []  # List untuk Output (hari ke-4)
+
+# Proses windowing
+for i in range(len(data) - window_size):
+    window = data[i:i + window_size]  # Input X
+    target = data[i + window_size]     # Output Y
+    X.append(window)
+    Y.append(target)
+
+X = np.array(X)
+Y = np.array(Y)
+
+print("Data Input (X):\\n", X)
+print("\\nData Output (Y):\\n", Y)`,
+                explanation: [
+                    { func: "data = [25, 26, 25, 27, 28, 26, 25, 24, 25, 27]", desc: "Data suhu harian (10 data)" },
+                    { func: "window_size = 3", desc: "Menggunakan 3 data untuk memprediksi 1 data berikutnya" },
+                    { func: "data[i:i + window_size]", desc: "Mengambil 3 data berturutan sebagai input" },
+                    { func: "data[i + window_size]", desc: "Mengambil data setelah window sebagai target" },
+                    { func: "Total windows = 10 - 3 = 7", desc: "7 pasangan input-output" }
+                ],
+                output: `Data Input (X):
+ [[25 26 25]   <- Hari 1,2,3
+  [26 25 27]   <- Hari 2,3,4
+  [25 27 28]   <- Hari 3,4,5
+  [27 28 26]   <- Hari 4,5,6
+  [28 26 25]   <- Hari 5,6,7
+  [26 25 24]   <- Hari 6,7,8
+  [25 24 25]]  <- Hari 7,8,9
+
+Data Output (Y):
+ [27 28 26 25 24 25 27]`,
+                memoryTrick: "🪟 WINDOWING = Jendela Geser. <span class='keyword'>Input X = 3 data masa lalu, Output Y = 1 data masa depan</span>. Seperti <span class='reward'>ramalan cuaca: lihat 3 hari lalu untuk prediksi besok</span>!"
+            },
+            {
+                id: 4,
+                title: "ESSAY 4: Analisis Statistik Citra dengan OpenCV",
+                code: `import cv2
+import numpy as np
+
+image_path = 'image.jpg'
+try:
+    # 1. Memuat citra (format BGR)
+    img = cv2.imread(image_path)
+    if img is None:
+        raise FileNotFoundError(f"File citra '{image_path}' tidak ditemukan.")
+    
+    # 2. Flattening: array 3D menjadi 1D
+    all_pixels = img.ravel()
+    
+    # 3. Menghitung nilai rata-rata (mean)
+    mean_intensity = np.mean(all_pixels)
+    
+    # 4. Menghitung standar deviasi (std)
+    std_intensity = np.std(all_pixels)
+    
+    print(f"Dimensi Citra (Tinggi, Lebar, Channel): {img.shape}")
+    print(f"Total Piksel: {all_pixels.size}")
+    print(f"\\nNilai Rata-rata Intensitas Piksel (Total): {mean_intensity:.4f}")
+    print(f"Standar Deviasi Intensitas Piksel (Total): {std_intensity:.4f}")
+except FileNotFoundError as e:
+    print(e)`,
+                explanation: [
+                    { func: "cv2.imread(image_path)", desc: "Membaca gambar sebagai array NumPy 3D (format BGR)" },
+                    { func: "img.ravel()", desc: "Meratakan array 3D menjadi 1D untuk perhitungan statistik" },
+                    { func: "np.mean(all_pixels)", desc: "Menghitung rata-rata intensitas semua piksel" },
+                    { func: "np.std(all_pixels)", desc: "Menghitung standar deviasi intensitas piksel" }
+                ],
+                output: `Dimensi Citra (Tinggi, Lebar, Channel): (1920, 1080, 3)
+Total Piksel: 6220800
+
+Nilai Rata-rata Intensitas Piksel (Total): 112.7552
+Standar Deviasi Intensitas Piksel (Total): 55.3080`,
+                memoryTrick: "🖼️ <span class='keyword'>cv2.imread = BACA GAMBAR</span>. <span class='keyword'>ravel() = RATAKAN jadi 1D</span>. Mean = rata-rata kecerahan, Std = kontras/variasi. <span class='reward'>OpenCV = Open Computer Vision</span>!"
+            },
+            {
+                id: 5,
+                title: "ESSAY 5: Pemisahan Channel BGR",
+                code: `import cv2
+import numpy as np
+
+image_path = 'image.jpg'
+try:
+    img = cv2.imread(image_path)
+    if img is None:
+        raise FileNotFoundError(f"File citra '{image_path}' tidak ditemukan.")
+    
+    # 1. Memisahkan channel BGR
+    B, G, R = cv2.split(img)
+    
+    # 2. Menghitung nilai median untuk setiap channel
+    median_B = np.median(B)
+    median_G = np.median(G)
+    median_R = np.median(R)
+    
+    print(f"Dimensi Citra: {img.shape}")
+    print("\\n--- Nilai Median Intensitas per Channel ---")
+    print(f"Median Channel Biru (B): {median_B}")
+    print(f"Median Channel Hijau (G): {median_G}")
+    print(f"Median Channel Merah (R): {median_R}")
+except FileNotFoundError as e:
+    print(e)`,
+                explanation: [
+                    { func: "cv2.split(img)", desc: "Memisahkan gambar menjadi 3 channel terpisah (Blue, Green, Red)" },
+                    { func: "np.median(B/G/R)", desc: "Menghitung nilai median (tengah) dari setiap channel warna" },
+                    { func: "Median vs Mean", desc: "Median lebih robust terhadap outlier dibanding mean" }
+                ],
+                output: `Dimensi Citra: (1920, 1080, 3)
+
+--- Nilai Median Intensitas per Channel ---
+Median Channel Biru (B): 95.0
+Median Channel Hijau (G): 101.0
+Median Channel Merah (R): 106.0`,
+                memoryTrick: "🎨 <span class='keyword'>BGR = Blue, Green, Red</span> (urutan OpenCV!). <span class='keyword'>cv2.split() = PISAHKAN channel</span>. <span class='reward'>Median = nilai tengah, lebih stabil dari mean</span>!"
+            },
+            {
+                id: 6,
+                title: "ESSAY 6: Data Cleansing dengan Pandas",
+                code: `import pandas as pd
+import numpy as np
+
+# 1. Membuat DataFrame dengan nilai NaN
+data = {'Feature1': [10, 15, np.nan, 20, 25],
+        'Feature2': [1, 2, 3, 4, 5],
+        'Label': ['A', 'B', 'A', 'C', 'B']}
+df = pd.DataFrame(data)
+print("DataFrame Awal:\\n", df)
+
+# 2. Menghitung nilai rata-rata (mean) dari 'Feature1'
+mean_f1 = df['Feature1'].mean()
+print(f"\\nRata-rata Feature1: {mean_f1}")
+
+# 3. Mengganti NaN dengan nilai rata-rata
+df['Feature1'] = df['Feature1'].fillna(mean_f1)
+print("\\nDataFrame Setelah Data Cleansing (NaN diganti mean):\\n", df)`,
+                explanation: [
+                    { func: "pd.DataFrame(data)", desc: "Membuat tabel/DataFrame dari dictionary" },
+                    { func: "np.nan", desc: "Representasi nilai kosong (Not a Number/missing value)" },
+                    { func: "df['Feature1'].mean()", desc: "Menghitung rata-rata kolom (mengabaikan NaN)" },
+                    { func: "df['Feature1'].fillna(mean_f1)", desc: "Mengisi NaN dengan nilai mean" }
+                ],
+                output: `DataFrame Awal:
+    Feature1  Feature2 Label
+0      10.0         1     A
+1      15.0         2     B
+2       NaN         3     A   <- Ada NaN
+3      20.0         4     C
+4      25.0         5     B
+
+Rata-rata Feature1: 17.5
+
+DataFrame Setelah Data Cleansing (NaN diganti mean):
+    Feature1  Feature2 Label
+0      10.0         1     A
+1      15.0         2     B
+2      17.5         3     A   <- NaN diganti 17.5
+3      20.0         4     C
+4      25.0         5     B`,
+                calculation: `Mean Feature1 = (10 + 15 + 20 + 25) / 4 = 70 / 4 = 17.5`,
+                memoryTrick: "🧹 <span class='keyword'>DATA CLEANSING = BERSIHKAN DATA KOTOR</span>. <span class='keyword'>NaN = Missing Value</span>. <span class='reward'>fillna() = ISI yang kosong</span>. Strategi umum: isi dengan mean/median!"
+            }
+        ];
+
+        // =====================================================
+        // RINGKASAN CEPAT
+        // =====================================================
+        const summaryItems = [
+            { key: "DL vs ML", value: "DL belajar FITUR OTOMATIS dari data mentah" },
+            { key: "Unsupervised", value: "TANPA LABEL - mencari pola tersembunyi" },
+            { key: "Setelah Data Prep", value: "TRAIN MODEL" },
+            { key: "Transpose", value: "TUKAR baris↔kolom (4×3 → 3×4)" },
+            { key: "NumPy", value: "Library ARRAY & MATRIKS fundamental" },
+            { key: "Gradient Descent", value: "Pakai DIFFERENTIATION (turunan)" },
+            { key: "Cost Function", value: "Ukur PERBEDAAN prediksi vs aktual" },
+            { key: "Backpropagation", value: "Error disebarkan MUNDUR untuk belajar" },
+            { key: "TensorFlow", value: "DATA FLOW GRAPH" },
+            { key: "Tensor", value: "Unit DATA yang mengalir" },
+            { key: "Keras", value: "WRAPPER mudah untuk TensorFlow" },
+            { key: "RNN", value: "Data SEKUENSIAL + MEMORI" },
+            { key: "LSTM", value: "RNN + GATES (Input, Forget, Output)" },
+            { key: "Conv Layer", value: "EKSTRAKSI FITUR dengan filter" },
+            { key: "Max Pooling", value: "KURANGI dimensi" },
+            { key: "Weight Sharing", value: "Lokalitas SPASIAL" },
+            { key: "Autoencoder", value: "ENCODE-DECODE untuk reduksi dimensi" },
+            { key: "RBM", value: "VISIBLE + HIDDEN layer" },
+            { key: "LSTM untuk", value: "LANGUAGE MODELLING" },
+            { key: "Pandas", value: "DATA TABULAR (loading, cleansing)" },
+            { key: "Google Colab", value: "Platform terintegrasi DL" },
+            { key: "Learning Rate", value: "UKURAN LANGKAH update weight" },
+            { key: "ReLU", value: "Activation HIDDEN LAYER terbaik" },
+            { key: "CNN untuk", value: "IMAGE PROCESSING" },
+            { key: "axis=0", value: "Per KOLOM (vertikal)" }
+        ];
+
+        // =====================================================
+        // STATE VARIABLES
+        // =====================================================
+        let currentQuestion = 0;
+        let currentFlashcard = 0;
+        let score = 0;
+        let streak = 0;
+        let wrongCount = 0;
+        let answered = new Array(questions.length).fill(null);
+        let timer = 0;
+        let timerInterval = null;
+
+        // =====================================================
+        // INITIALIZATION
+        // =====================================================
+        function init() {
+            createNeuralBackground();
+            renderQuestionList();
+            renderQuestion();
+            renderFlashcard();
+            renderEssays();
+            renderSummary();
+            startTimer();
+        }
+
+        function createNeuralBackground() {
+            const container = document.getElementById('neuralBg');
+            for (let i = 0; i < 30; i++) {
+                const neuron = document.createElement('div');
+                neuron.className = 'neuron';
+                neuron.style.left = Math.random() * 100 + '%';
+                neuron.style.top = Math.random() * 100 + '%';
+                neuron.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(neuron);
+            }
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timer++;
+                const mins = Math.floor(timer / 60).toString().padStart(2, '0');
+                const secs = (timer % 60).toString().padStart(2, '0');
+                document.getElementById('timerValue').textContent = `${mins}:${secs}`;
+            }, 1000);
+        }
+
+        // =====================================================
+        // NAVIGATION
+        // =====================================================
+        function switchSection(section) {
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(section + 'Section').classList.add('active');
+        }
+
+        // =====================================================
+        // QUIZ FUNCTIONS
+        // =====================================================
+        function renderQuestionList() {
+            const container = document.getElementById('questionList');
+            container.innerHTML = questions.map((q, i) => `
+                <div class="question-dot ${i === currentQuestion ? 'current' : ''} ${answered[i] === true ? 'correct' : ''} ${answered[i] === false ? 'wrong' : ''}" 
+                     onclick="goToQuestion(${i})">
+                    ${i + 1}
+                </div>
+            `).join('');
+        }
+
+        function renderQuestion() {
+            const q = questions[currentQuestion];
+            const container = document.getElementById('quizContainer');
+            
+            container.innerHTML = `
+                <span class="question-number">#${q.id}</span>
+                <div class="question-text">${q.question}</div>
+                <div class="options">
+                    ${q.options.map((opt, i) => `
+                        <div class="option ${answered[currentQuestion] !== null ? 'disabled' : ''} ${answered[currentQuestion] !== null && i === q.correct ? 'correct' : ''} ${answered[currentQuestion] === false && i !== q.correct && document.querySelector('.option.selected')?.dataset.index == i ? 'wrong' : ''}" 
+                             data-index="${i}" onclick="selectOption(${i})">
+                            <span class="option-letter">${String.fromCharCode(65 + i)}</span>
+                            <span>${opt}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="memory-trick ${answered[currentQuestion] !== null ? 'show' : ''}" id="memoryTrick">
+                    <div class="memory-trick-title">🧠 TRIK INGATAN EKSTREM</div>
+                    <div class="memory-trick-content">${q.memoryTrick}</div>
+                </div>
+            `;
+            
+            updateProgress();
+        }
+
+        function selectOption(index) {
+            if (answered[currentQuestion] !== null) return;
+            
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelector(`.option[data-index="${index}"]`).classList.add('selected');
+        }
+
+        function checkAnswer() {
+            const selected = document.querySelector('.option.selected');
+            if (!selected || answered[currentQuestion] !== null) return;
+            
+            const selectedIndex = parseInt(selected.dataset.index);
+            const q = questions[currentQuestion];
+            const isCorrect = selectedIndex === q.correct;
+            
+            answered[currentQuestion] = isCorrect;
+            
+            // Update UI
+            document.querySelectorAll('.option').forEach((opt, i) => {
+                opt.classList.add('disabled');
+                if (i === q.correct) {
+                    opt.classList.add('correct');
+                } else if (i === selectedIndex && !isCorrect) {
+                    opt.classList.add('wrong');
+                }
+            });
+            
+            // Show memory trick
+            document.getElementById('memoryTrick').classList.add('show');
+            
+            // Update stats
+            if (isCorrect) {
+                score += 10;
+                streak++;
+                if (streak >= 3) {
+                    showStreakFire();
+                }
+            } else {
+                streak = 0;
+                wrongCount++;
+                document.getElementById('fearCounter').classList.add('show');
+                document.getElementById('wrongCount').textContent = wrongCount;
+            }
+            
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('streakValue').textContent = streak;
+            
+            renderQuestionList();
+            updateProgress();
+            
+            // Check if all questions answered
+            if (answered.filter(a => a !== null).length === questions.length) {
+                setTimeout(showResults, 1000);
+            }
+        }
+
+        function showStreakFire() {
+            const fire = document.getElementById('streakFire');
+            fire.classList.add('show');
+            setTimeout(() => fire.classList.remove('show'), 1000);
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion();
+                renderQuestionList();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+                renderQuestionList();
+            }
+        }
+
+        function goToQuestion(index) {
+            currentQuestion = index;
+            renderQuestion();
+            renderQuestionList();
+        }
+
+        function updateProgress() {
+            const progress = (answered.filter(a => a !== null).length / questions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            streak = 0;
+            wrongCount = 0;
+            answered = new Array(questions.length).fill(null);
+            timer = 0;
+            
+            document.getElementById('scoreValue').textContent = '0';
+            document.getElementById('streakValue').textContent = '0';
+            document.getElementById('fearCounter').classList.remove('show');
+            
+            renderQuestionList();
+            renderQuestion();
+        }
+
+        function showResults() {
+            const correctCount = answered.filter(a => a === true).length;
+            const percentage = Math.round((correctCount / questions.length) * 100);
+            
+            let icon, title, message;
+            if (percentage >= 90) {
+                icon = '🏆';
+                title = 'SEMPURNA!';
+                message = 'Otak kamu sudah ter-encode dengan sempurna!';
+            } else if (percentage >= 70) {
+                icon = '🎉';
+                title = 'BAGUS!';
+                message = 'Terus latihan untuk mencapai kesempurnaan!';
+            } else if (percentage >= 50) {
+                icon = '💪';
+                title = 'LUMAYAN';
+                message = 'Masih perlu latihan lebih intensif!';
+            } else {
+                icon = '😱';
+                title = 'BAHAYA!';
+                message = 'Ulangi lagi dan gunakan trik ingatan!';
+            }
+            
+            document.getElementById('modalIcon').textContent = icon;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalScore').textContent = `${correctCount}/${questions.length}`;
+            document.getElementById('modalMessage').textContent = message;
+            document.getElementById('scoreModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('scoreModal').classList.remove('show');
+        }
+
+        // =====================================================
+        // FLASHCARD FUNCTIONS
+        // =====================================================
+        function renderFlashcard() {
+            const q = questions[currentFlashcard];
+            document.getElementById('flashcardQuestion').innerHTML = `
+                <strong>Soal ${q.id}:</strong><br><br>
+                ${q.question}
+            `;
+            document.getElementById('flashcardAnswer').innerHTML = `
+                ${String.fromCharCode(65 + q.correct)}. ${q.options[q.correct]}
+            `;
+            document.getElementById('flashcardCurrent').textContent = currentFlashcard + 1;
+            document.getElementById('flashcardTotal').textContent = questions.length;
+            document.getElementById('flashcard').classList.remove('flipped');
+        }
+
+        function flipCard() {
+            document.getElementById('flashcard').classList.toggle('flipped');
+        }
+
+        function prevFlashcard() {
+            if (currentFlashcard > 0) {
+                currentFlashcard--;
+                renderFlashcard();
+            }
+        }
+
+        function nextFlashcard() {
+            if (currentFlashcard < questions.length - 1) {
+                currentFlashcard++;
+                renderFlashcard();
+            }
+        }
+
+        function shuffleFlashcards() {
+            currentFlashcard = Math.floor(Math.random() * questions.length);
+            renderFlashcard();
+        }
+
+        // =====================================================
+        // ESSAY FUNCTIONS
+        // =====================================================
+        function renderEssays() {
+            const container = document.getElementById('essayContainer');
+            container.innerHTML = essays.map(essay => `
+                <div class="essay-card" id="essay${essay.id}">
+                    <div class="essay-header" onclick="toggleEssay(${essay.id})">
+                        <span class="essay-title">${essay.title}</span>
+                        <span class="essay-toggle">▼</span>
+                    </div>
+                    <div class="essay-content">
+                        <div class="code-block">
+                            <pre>${escapeHtml(essay.code)}</pre>
+                        </div>
+                        
+                        <div class="explanation-box">
+                            <h4>📖 Penjelasan Fungsi:</h4>
+                            <ul>
+                                ${essay.explanation.map(exp => `
+                                    <li><span class="func-name">${exp.func}</span>: ${exp.desc}</li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        
+                        ${essay.calculation ? `
+                            <div class="explanation-box" style="border-left-color: var(--neon-yellow);">
+                                <h4 style="color: var(--neon-yellow);">🧮 Perhitungan:</h4>
+                                <pre style="color: #ddd;">${essay.calculation}</pre>
+                            </div>
+                        ` : ''}
+                        
+                        <div class="output-block">
+                            <pre>${essay.output}</pre>
+                        </div>
+                        
+                        <div class="memory-trick show">
+                            <div class="memory-trick-title">🧠 TRIK INGATAN</div>
+                            <div class="memory-trick-content">${essay.memoryTrick}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleEssay(id) {
+            document.getElementById('essay' + id).classList.toggle('open');
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/&/g, '&amp;')
+                       .replace(/</g, '&lt;')
+                       .replace(/>/g, '&gt;')
+                       .replace(/"/g, '&quot;')
+                       .replace(/'/g, '&#039;');
+        }
+
+        // =====================================================
+        // SUMMARY FUNCTIONS
+        // =====================================================
+        function renderSummary() {
+            const container = document.getElementById('summaryGrid');
+            container.innerHTML = summaryItems.map(item => `
+                <div class="summary-card">
+                    <h4>${item.key}</h4>
+                    <p>${item.value}</p>
+                </div>
+            `).join('');
+        }
+
+        // =====================================================
+        // KEYBOARD SHORTCUTS
+        // =====================================================
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('quizSection').classList.contains('active')) {
+                if (e.key === 'ArrowLeft') prevQuestion();
+                if (e.key === 'ArrowRight') nextQuestion();
+                if (e.key === 'Enter') checkAnswer();
+                if (e.key >= '1' && e.key <= '4') {
+                    const index = parseInt(e.key) - 1;
+                    selectOption(index);
+                }
+            }
+            if (document.getElementById('flashcardSection').classList.contains('active')) {
+                if (e.key === 'ArrowLeft') prevFlashcard();
+                if (e.key === 'ArrowRight') nextFlashcard();
+                if (e.key === ' ') flipCard();
+            }
+        });
+
+        // Initialize app
+        init();
+    </script>
+</body>
+</html>
