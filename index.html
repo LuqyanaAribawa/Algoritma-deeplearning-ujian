@@ -19,6 +19,7 @@
             --neon-blue: #00d4ff;
             --neon-purple: #bf00ff;
             --neon-yellow: #ffee00;
+            --neon-orange: #ff6600;
             --dark-bg: #0a0a0f;
             --card-bg: #12121a;
         }
@@ -162,6 +163,29 @@
             box-shadow: 0 0 10px var(--neon-green);
         }
         
+        /* Shuffle Mode Indicator */
+        .shuffle-indicator {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: linear-gradient(135deg, var(--neon-orange), var(--neon-yellow));
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #000;
+            font-weight: bold;
+            animation: shufflePulse 2s infinite;
+        }
+        
+        .shuffle-indicator.active {
+            display: flex;
+        }
+        
+        @keyframes shufflePulse {
+            0%, 100% { box-shadow: 0 0 10px var(--neon-orange); }
+            50% { box-shadow: 0 0 25px var(--neon-yellow); }
+        }
+        
         /* Navigation Tabs */
         .nav-tabs {
             display: flex;
@@ -216,6 +240,58 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
+        /* Shuffle Controls Box */
+        .shuffle-controls {
+            background: linear-gradient(135deg, rgba(255, 102, 0, 0.2), rgba(255, 238, 0, 0.2));
+            border: 2px solid var(--neon-orange);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .shuffle-controls h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-orange);
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        
+        .shuffle-options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        .shuffle-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .shuffle-checkbox:hover {
+            background: rgba(255, 102, 0, 0.3);
+        }
+        
+        .shuffle-checkbox input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--neon-orange);
+        }
+        
+        .shuffle-checkbox label {
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
         /* Quiz Mode */
         .quiz-container {
             background: var(--card-bg);
@@ -237,14 +313,32 @@
             background: linear-gradient(90deg, var(--neon-red), var(--neon-purple), var(--neon-blue));
         }
         
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
         .question-number {
             font-family: 'Orbitron', sans-serif;
             font-size: 3rem;
-            color: var(--neon-purple);
-            opacity: 0.3;
+			color: var(--neon-yellow);
+            opacity: 0.9;
             position: absolute;
             top: 20px;
             right: 30px;
+        }
+        
+        .original-number {
+            font-size: 0.8rem;
+            color: var(--neon-yellow);
+            background: rgba(255, 238, 0, 0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+            position: absolute;
+            top: 8px;
+            left: 28px;
         }
         
         .question-text {
@@ -429,6 +523,16 @@
             transform: scale(1.05);
         }
         
+        .btn-warning {
+            background: linear-gradient(135deg, var(--neon-orange), var(--neon-yellow));
+            color: #000;
+        }
+        
+        .btn-warning:hover {
+            box-shadow: 0 0 30px rgba(255, 238, 0, 0.5);
+            transform: scale(1.05);
+        }
+        
         /* Essay Section */
         .essay-card {
             background: var(--card-bg);
@@ -507,26 +611,6 @@
             color: #e0e0e0;
             white-space: pre-wrap;
             word-wrap: break-word;
-        }
-        
-        .code-comment {
-            color: #6a9955;
-        }
-        
-        .code-keyword {
-            color: #569cd6;
-        }
-        
-        .code-function {
-            color: #dcdcaa;
-        }
-        
-        .code-string {
-            color: #ce9178;
-        }
-        
-        .code-number {
-            color: #b5cea8;
         }
         
         /* Output Block */
@@ -761,6 +845,11 @@
                 padding: 10px 20px;
                 font-size: 0.8rem;
             }
+            
+            .shuffle-options {
+                flex-direction: column;
+                align-items: center;
+            }
         }
         
         /* Quick Summary Cards */
@@ -819,6 +908,29 @@
             0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
             50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
             100% { opacity: 0; transform: translate(-50%, -100%) scale(1); }
+        }
+        
+        /* Shuffle Animation */
+        .shuffle-animation {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 6rem;
+            z-index: 200;
+            animation: shuffleAnim 1s ease forwards;
+            pointer-events: none;
+            display: none;
+        }
+        
+        .shuffle-animation.show {
+            display: block;
+        }
+        
+        @keyframes shuffleAnim {
+            0% { opacity: 0; transform: translate(-50%, -50%) rotate(0deg) scale(0.5); }
+            50% { opacity: 1; transform: translate(-50%, -50%) rotate(180deg) scale(1.2); }
+            100% { opacity: 0; transform: translate(-50%, -50%) rotate(360deg) scale(0.5); }
         }
         
         /* All Questions List */
@@ -925,6 +1037,9 @@
                 <div class="stat-label">WAKTU</div>
             </div>
         </div>
+        <div class="shuffle-indicator" id="shuffleIndicator">
+            🔀 MODE ACAK AKTIF
+        </div>
     </div>
     
     <nav class="nav-tabs">
@@ -937,6 +1052,22 @@
     <main class="content">
         <!-- Quiz Section -->
         <section class="section active" id="quizSection">
+            <!-- Shuffle Controls -->
+            <div class="shuffle-controls">
+                <h3>🔀 PENGATURAN ACAK</h3>
+                <div class="shuffle-options">
+                    <div class="shuffle-checkbox">
+                        <input type="checkbox" id="shuffleQuestions" checked>
+                        <label for="shuffleQuestions">Acak Urutan Soal</label>
+                    </div>
+                    <div class="shuffle-checkbox">
+                        <input type="checkbox" id="shuffleOptions" checked>
+                        <label for="shuffleOptions">Acak Pilihan Jawaban</label>
+                    </div>
+                </div>
+                <button class="btn btn-warning" onclick="applyShuffleAndReset()">🔀 ACAK & MULAI ULANG</button>
+            </div>
+            
             <div class="question-list" id="questionList"></div>
             <div class="quiz-container" id="quizContainer"></div>
             <div class="quiz-controls">
@@ -946,6 +1077,7 @@
             </div>
             <div class="quiz-controls" style="margin-top: 15px;">
                 <button class="btn btn-primary" onclick="resetQuiz()">🔄 MULAI ULANG</button>
+                <button class="btn btn-warning" onclick="applyShuffleAndReset()">🔀 ACAK ULANG</button>
             </div>
         </section>
         
@@ -964,7 +1096,7 @@
             </div>
             <div class="quiz-controls">
                 <button class="btn btn-danger" onclick="prevFlashcard()">⬅️</button>
-                <button class="btn btn-primary" onclick="shuffleFlashcards()">🔀 ACAK</button>
+                <button class="btn btn-warning" onclick="shuffleFlashcards()">🔀 ACAK</button>
                 <button class="btn btn-success" onclick="nextFlashcard()">➡️</button>
             </div>
             <p style="text-align: center; margin-top: 15px; color: #888;">
@@ -1000,16 +1132,18 @@
     <!-- Streak Fire Animation -->
     <div class="streak-fire" id="streakFire">🔥</div>
     
+    <!-- Shuffle Animation -->
+    <div class="shuffle-animation" id="shuffleAnimation">🔀</div>
+    
     <!-- Fear Counter -->
     <div class="fear-counter" id="fearCounter">
         ⚠️ SALAH: <span id="wrongCount">0</span>
     </div>
-
-    <script>
+	    <script>
         // =====================================================
-        // DATA SOAL PILIHAN GANDA
+        // DATA SOAL PILIHAN GANDA (ORIGINAL)
         // =====================================================
-        const questions = [
+        const originalQuestions = [
             {
                 id: 1,
                 question: "Perbedaan utama antara Machine Learning dan Deep Learning adalah bahwa Deep Learning mampu mempelajari fitur (feature) secara otomatis dari data mentah, sedangkan Machine Learning tradisional membutuhkan ekstraksi fitur manual.",
@@ -1592,24 +1726,141 @@ DataFrame Setelah Data Cleansing (NaN diganti mean):
             { key: "CNN untuk", value: "IMAGE PROCESSING" },
             { key: "axis=0", value: "Per KOLOM (vertikal)" }
         ];
-
-        // =====================================================
+		        // =====================================================
         // STATE VARIABLES
         // =====================================================
+        let questions = []; // Array soal yang akan digunakan (bisa diacak)
         let currentQuestion = 0;
         let currentFlashcard = 0;
         let score = 0;
         let streak = 0;
         let wrongCount = 0;
-        let answered = new Array(questions.length).fill(null);
+        let answered = [];
         let timer = 0;
         let timerInterval = null;
+        let isShuffleQuestions = true;
+        let isShuffleOptions = true;
+        
+        // Menyimpan mapping jawaban yang benar setelah diacak
+        let shuffledCorrectAnswers = [];
+
+        // =====================================================
+        // SHUFFLE FUNCTIONS
+        // =====================================================
+        
+        // Fisher-Yates Shuffle Algorithm
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+        
+        // Shuffle options untuk satu soal dan update correct answer index
+        function shuffleQuestionOptions(question) {
+            const originalCorrect = question.options[question.correct];
+            
+            // Buat array dengan index untuk tracking
+            const optionsWithIndex = question.options.map((opt, idx) => ({
+                text: opt,
+                originalIndex: idx
+            }));
+            
+            // Shuffle options
+            const shuffledOptions = shuffleArray(optionsWithIndex);
+            
+            // Cari index baru dari jawaban yang benar
+            const newCorrectIndex = shuffledOptions.findIndex(opt => opt.originalIndex === question.correct);
+            
+            return {
+                ...question,
+                options: shuffledOptions.map(opt => opt.text),
+                correct: newCorrectIndex,
+                originalCorrect: question.correct // Simpan untuk referensi
+            };
+        }
+        
+        // Fungsi utama untuk menyiapkan soal
+        function prepareQuestions() {
+            isShuffleQuestions = document.getElementById('shuffleQuestions').checked;
+            isShuffleOptions = document.getElementById('shuffleOptions').checked;
+            
+            // Copy soal original
+            let preparedQuestions = originalQuestions.map(q => ({...q}));
+            
+            // Shuffle urutan soal jika diaktifkan
+            if (isShuffleQuestions) {
+                preparedQuestions = shuffleArray(preparedQuestions);
+            }
+            
+            // Shuffle opsi jawaban jika diaktifkan
+            if (isShuffleOptions) {
+                preparedQuestions = preparedQuestions.map(q => shuffleQuestionOptions(q));
+            }
+            
+            // Update shuffle indicator
+            const indicator = document.getElementById('shuffleIndicator');
+            if (isShuffleQuestions || isShuffleOptions) {
+                indicator.classList.add('active');
+                let text = '🔀 ACAK: ';
+                if (isShuffleQuestions && isShuffleOptions) {
+                    text += 'SOAL + JAWABAN';
+                } else if (isShuffleQuestions) {
+                    text += 'SOAL';
+                } else {
+                    text += 'JAWABAN';
+                }
+                indicator.textContent = text;
+            } else {
+                indicator.classList.remove('active');
+            }
+            
+            return preparedQuestions;
+        }
+        
+        // Fungsi untuk apply shuffle dan reset
+        function applyShuffleAndReset() {
+            // Tampilkan animasi shuffle
+            showShuffleAnimation();
+            
+            // Delay untuk animasi
+            setTimeout(() => {
+                questions = prepareQuestions();
+                answered = new Array(questions.length).fill(null);
+                currentQuestion = 0;
+                score = 0;
+                streak = 0;
+                wrongCount = 0;
+                timer = 0;
+                
+                document.getElementById('scoreValue').textContent = '0';
+                document.getElementById('streakValue').textContent = '0';
+                document.getElementById('fearCounter').classList.remove('show');
+                
+                renderQuestionList();
+                renderQuestion();
+                renderFlashcard();
+            }, 500);
+        }
+        
+        function showShuffleAnimation() {
+            const anim = document.getElementById('shuffleAnimation');
+            anim.classList.add('show');
+            setTimeout(() => anim.classList.remove('show'), 1000);
+        }
 
         // =====================================================
         // INITIALIZATION
         // =====================================================
         function init() {
             createNeuralBackground();
+            
+            // Siapkan soal dengan shuffle
+            questions = prepareQuestions();
+            answered = new Array(questions.length).fill(null);
+            
             renderQuestionList();
             renderQuestion();
             renderFlashcard();
@@ -1657,7 +1908,7 @@ DataFrame Setelah Data Cleansing (NaN diganti mean):
             const container = document.getElementById('questionList');
             container.innerHTML = questions.map((q, i) => `
                 <div class="question-dot ${i === currentQuestion ? 'current' : ''} ${answered[i] === true ? 'correct' : ''} ${answered[i] === false ? 'wrong' : ''}" 
-                     onclick="goToQuestion(${i})">
+                     onclick="goToQuestion(${i})" title="Soal ${i + 1} (Original: #${q.id})">
                     ${i + 1}
                 </div>
             `).join('');
@@ -1667,12 +1918,17 @@ DataFrame Setelah Data Cleansing (NaN diganti mean):
             const q = questions[currentQuestion];
             const container = document.getElementById('quizContainer');
             
+            // Tampilkan nomor original jika diacak
+            const showOriginalNumber = isShuffleQuestions ? 
+                `<div class="original-number">Original: #${q.id}</div>` : '';
+            
             container.innerHTML = `
-                <span class="question-number">#${q.id}</span>
+                ${showOriginalNumber}
+                <span class="question-number">#${currentQuestion + 1}</span>
                 <div class="question-text">${q.question}</div>
                 <div class="options">
                     ${q.options.map((opt, i) => `
-                        <div class="option ${answered[currentQuestion] !== null ? 'disabled' : ''} ${answered[currentQuestion] !== null && i === q.correct ? 'correct' : ''} ${answered[currentQuestion] === false && i !== q.correct && document.querySelector('.option.selected')?.dataset.index == i ? 'wrong' : ''}" 
+                        <div class="option ${answered[currentQuestion] !== null ? 'disabled' : ''} ${answered[currentQuestion] !== null && i === q.correct ? 'correct' : ''}" 
                              data-index="${i}" onclick="selectOption(${i})">
                             <span class="option-letter">${String.fromCharCode(65 + i)}</span>
                             <span>${opt}</span>
@@ -1833,7 +2089,7 @@ DataFrame Setelah Data Cleansing (NaN diganti mean):
         function renderFlashcard() {
             const q = questions[currentFlashcard];
             document.getElementById('flashcardQuestion').innerHTML = `
-                <strong>Soal ${q.id}:</strong><br><br>
+                <strong>Soal ${currentFlashcard + 1}:</strong><br><br>
                 ${q.question}
             `;
             document.getElementById('flashcardAnswer').innerHTML = `
@@ -1953,8 +2209,20 @@ DataFrame Setelah Data Cleansing (NaN diganti mean):
             if (document.getElementById('flashcardSection').classList.contains('active')) {
                 if (e.key === 'ArrowLeft') prevFlashcard();
                 if (e.key === 'ArrowRight') nextFlashcard();
-                if (e.key === ' ') flipCard();
+                if (e.key === ' ') {
+                    e.preventDefault();
+                    flipCard();
+                }
             }
+        });
+
+        // =====================================================
+        // EVENT LISTENERS FOR SHUFFLE CHECKBOXES
+        // =====================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default checked state
+            document.getElementById('shuffleQuestions').checked = true;
+            document.getElementById('shuffleOptions').checked = true;
         });
 
         // Initialize app
